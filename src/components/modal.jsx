@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./Modal.module.css";
 import { RiCloseLine, RiFileChartLine } from "react-icons/ri";
+import { FiDownload, FiMaximize } from "react-icons/fi";
+import { MdOutlineClose } from "react-icons/md";
 
 const Modal = ({ setIsOpen }) => {
   return (
@@ -16,7 +18,18 @@ const Modal = ({ setIsOpen }) => {
               <span className={styles.topFileName}>Sales-dashboard.png</span>
             </div>
             <div className={styles.toolbarRight}>
-              <div className={styles.rightButtons}></div>
+              <div className={styles.rightButtons}>
+                <span>
+                  <FiMaximize style={{ color: "#fff", fontSize: "20px" }} />
+                </span>
+                <span>
+                  <FiDownload style={{ color: "#fff", fontSize: "20px" }} />
+                </span>{" "}
+                |
+                <span>
+                  <MdOutlineClose style={{ color: "#fff", fontSize: "20px" }} />
+                </span>
+              </div>
             </div>
           </div>
         </div>

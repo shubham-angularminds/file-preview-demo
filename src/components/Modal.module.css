@@ -42,6 +42,13 @@
   .topFileName {
     left: 50px
   }
+
+  .toolbarRight {
+    float: right;
+  }
+  .rightButtons {
+    margin-right: 50px;
+  }
   
   .centered {
     position: fixed;
@@ -52,7 +59,7 @@
   
   .modal {
     width: 90vw;
-    height: 90vh;
+    height: 80vh;
     background: white;
     color: white;
     z-index: 10;
