@@ -19,8 +19,8 @@
   }
   
   .modal {
-    width: 250px;
-    height: 170px;
+    width: 90vw;
+    height: 90vh;
     background: white;
     color: white;
     z-index: 10;
@@ -45,7 +45,7 @@
     text-align: center;
   }
   
-  .modalContent {
+  /* .modalContent {
     padding: 10px;
     font-size: 14px;
     color: #2c3e50;
@@ -57,13 +57,13 @@
     bottom: 2px;
     margin-bottom: 10px;
     width: 100%;
-  }
+  } */
   
-  .actionsContainer {
+  /* .actionsContainer {
     display: flex;
     justify-content: space-around;
     align-items: center;
-  }
+  } */
   
   .closeBtn {
     cursor: pointer;
