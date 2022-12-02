@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.react-pdf__Page {
+  left: 50%;
+  right: 50%;
+  transform: translate(-260px, 35px);  
+}
