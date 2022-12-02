@@ -3,7 +3,7 @@ import "./App.css";
 import styles from "./App.module.css";
 import Modal from "./components/modal";
 import SampleImage from "./sample.jpg";
-import SamplePdf from "./sample.pdf";
+import SamplePdf from "./sample2.pdf";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);

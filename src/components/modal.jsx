@@ -12,7 +12,7 @@ import {
 import classNames from "classnames";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack5";
-import SamplePdf from "../sample.pdf";
+import SamplePdf from "../sample2.pdf";
 
 const Modal = ({
   setIsOpen,
@@ -31,7 +31,6 @@ const Modal = ({
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
-
 
   return (
     <>
@@ -83,7 +82,7 @@ const Modal = ({
                   >
                     <Page pageNumber={pageNumber} />
                   </Document>
-                  <p style={{ color: "#fff" }}>
+                  <p style={{ color: "#000" }}>
                     Page {pageNumber} of {numPages}
                   </p>
                 </div>
