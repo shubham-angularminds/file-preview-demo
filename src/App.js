@@ -4,6 +4,7 @@ import styles from "./App.module.css";
 import Modal from "./components/modal";
 import SampleImage from "./sample.jpg";
 import SamplePdf from "./sample2.pdf";
+import SampleExcel from  './sample.xlsx';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,11 @@ function App() {
       file: SamplePdf,
       fileType: "pdf",
       fileName: "sample-pdf.pdf",
-    },
+    },{
+      file: SampleExcel,
+      fileType: 'excel',
+      fileName: 'sample-excel.xlsx'
+    }
   ];
 
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
@@ -31,6 +36,7 @@ function App() {
   };
 
   const fileLength = files.length;
+  
 
   return (
     <>

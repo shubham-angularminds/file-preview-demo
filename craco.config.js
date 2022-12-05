@@ -13,12 +13,6 @@ module.exports = {
           asset: require.resolve("assert"),
         },
       },
-      plugins: [
-        new webpack.ProvidePlugin({
-          Buffer: ["buffer", "Buffer"],
-          process: "process/browser",
-        }),
-      ],
     },
   },
 };

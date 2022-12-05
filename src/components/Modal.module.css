@@ -79,10 +79,11 @@
   transform: translate(-4px, 4px);
 }
 
-.lowerButtonsSection {
+.lowerButtonsSectionImage {
   background-color: #4e4e4e;
   height: 50px;
-  width: 200px;
+  width: fit-content;
+  padding: 0 25px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -93,13 +94,31 @@
   transform: translate(-50%, -50%);
 }
 
+.lowerButtonsSectionPdf {
+  background-color: #4e4e4e;
+  color: #fff;
+  height: 50px;
+  padding: 0 20px;
+  width: fit-content;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 50%;
+  top: -30px;
+  transform: translate(-50%, -50%);
+}
+
+.pageInput {
+  width: 35px
+}
+
 .lowerBtns {
-  padding: 20px 10px;
   cursor: pointer;
   font-weight: 500;
   border-radius: 8px;
   border: none;
-  font-size: 18px;
   color: #2c3e50;
   transition: all 0.25s ease;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
@@ -107,7 +126,7 @@
 
 .lowerBtns:hover {
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
-  transform: translate(-4px, 4px);
+  transform: translate(4px, -4px);
 }
 
 .centered {
@@ -120,7 +139,7 @@
 .imageModal {
   width: 90vw;
   height: 80vh;
-  background: white;
+  background: rgb(0, 0, 0);
   color: white;
   z-index: 10;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
