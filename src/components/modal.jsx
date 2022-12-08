@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import styles from "./Modal.module.css";
 import { RiCloseLine, RiFileChartLine } from "react-icons/ri";
 import { FiDownload, FiMaximize } from "react-icons/fi";
@@ -16,7 +16,8 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack5";
 import { useEffect } from "react";
 import { read, utils, writeFileXLSX } from "xlsx";
-
+//Todo seperate Excel view component
+import ExcelTable from "./ExcelTable";
 
 const Modal = ({
   setIsOpen,
@@ -88,6 +89,8 @@ const Modal = ({
     transform: `rotate(${rotation}deg)`,
   };
 
+  console.log("image styles : ", imageStyle);
+
   const rotate = () => {
     let newRotation = rotation + 90;
     if (newRotation >= 360) {
@@ -118,6 +121,11 @@ const Modal = ({
     handle.enter();
   };
 
+  const handleFullScrenChange = useCallback((state) => {
+    console.log("Screen 1 went to", state);
+    state ? setFullScreenEnabled(true) : setFullScreenEnabled(false);
+  }, []);
+
   //Excel
   useEffect(() => {
     if (file?.fileType === "excel") {
@@ -145,23 +153,9 @@ const Modal = ({
 
   const { fileType } = file;
 
-  const grid = [
-    [{ value: 1 }, { value: 3 }, { id: 1 }],
-    [{ value: 2 }, { value: 4 }],
-  ];
-
-  const handleNext = () => {
-    setSheetIndex((value) => Number(value + 1));
-  };
-
   const selectSheet = (sheet) => {
     setSheetIndex(sheet);
   };
-
-  console.log("total sheets ", totalSheets);
-
-  console.log("sheet index ", sheetIndex);
-  console.log("all sheets ", allSheets);
 
   return (
     <>
@@ -206,15 +200,19 @@ const Modal = ({
           className={fileType === "image" ? styles.imageModal : styles.pdfModal}
         >
           <div className={styles.modalContent}>
-            <FullScreen handle={handle}>
+            <FullScreen handle={handle} onChange={handleFullScrenChange}>
               {fileType === "image" ? (
-                <img
-                  style={fullScreenEnabled ? {} : imageStyle}
-                  alt="file-content"
-                  src="./sample.jpg"
-                  ref={imageRef}
-                ></img>
+                <div className="image-container">
+                  <img
+                    style={fullScreenEnabled ? {} : imageStyle}
+                    alt="file-content"
+                    src="./sample.jpg"
+                    ref={imageRef}
+                  ></img>
+                </div>
               ) : fileType === "pdf" ? (
+                // <ExcelTable  file={file.file}/>
+
                 <div className={styles.pdfRender}>
                   <Document
                     file={file.file}
@@ -251,7 +249,10 @@ const Modal = ({
                     </tbody>
                   </table>
                   <>
-                    <div className={styles.sheetButtonContainer} id="excel-sheet-buttons">
+                    <div
+                      className={styles.sheetButtonContainer}
+                      id="excel-sheet-buttons"
+                    >
                       {allSheets?.map((sheet, index) => (
                         <button
                           type="button"

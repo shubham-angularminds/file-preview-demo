@@ -38,23 +38,28 @@
   }
 }
 
-.react-pdf__Page {
-  left: 50%;
-  right: 50%;
-  margin-right: -50%;
-  transform: translate(-300px, 30px);
-  /* display: block;
-  margin-right: auto;
-  margin-left: auto;
-*/
-}
-
 .fullscreen-enabled>div {
   margin: auto;
-  width: max-content;
   height: 100%;
+  width: max-content;
+}
+
+.fullscreen-enabled .react-pdf__Document {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.fullscreen-enabled .react-pdf__Page__canvas {
+  width: 100% !important;
+  height: 100vh !important;
 }
 
 .fullscreen-enabled #excel-sheet-buttons {
   display: none;
+}
+
+.fullscreen-enabled img {
+  width: 100% !important;
+  height: 100%;
 }
