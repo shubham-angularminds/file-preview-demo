@@ -37,12 +37,11 @@ function App() {
 
   const fileLength = files.length;
   
-
   return (
     <>
       <div>
         <button className={styles.primaryBtn} onClick={() => setIsOpen(true)}>
-          Open Modal
+          Show File
         </button>
         {isOpen && (
           <Modal

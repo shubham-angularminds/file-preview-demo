@@ -166,20 +166,20 @@
   text-align: center;
 }
 
- .modalContent {
-    font-size: 14px;
-    color: #000000;
-    text-align: center;
-    width: auto;
-    height: 100%;
-    overflow: hidden;
-    border: none;
+.modalContent {
+  font-size: 14px;
+  color: #000000;
+  text-align: center;
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  border: none;
 }
 
 .navigatePrevious {
-  position: absolute;
+  position: fixed;
   top: 50%;
-  left: -50px; 
+  left: -50px;
   background: rgb(77, 77, 77);
   color: #000;
   cursor: pointer;
@@ -187,7 +187,7 @@
 }
 
 .navigateNext {
-  position: absolute;
+  position: fixed;
   right: -50px;
   top: 50%;
   background: rgb(77, 77, 77);
@@ -195,15 +195,13 @@
   cursor: pointer;
   border-radius: 15px;
 }
-  
-.pdfRender {
 
-}
+.pdfRender {}
 
 .react-pdf__Page {
   left: 50%;
   right: 50%;
-  transform: translate(-260px, 35px);  
+  transform: translate(-260px, 35px);
 }
 
 .closeBtn {
@@ -267,3 +265,43 @@
   transform: none;
   background: whitesmoke;
 }
+
+table {
+  border-collapse: collapse;
+}
+
+.tableContainer {
+  margin-top: 20px;
+  width: 85vw;
+  height: 650px;
+  overflow: auto;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+th {
+  background-color: #dddddd;
+}
+
+.excelTable {
+  background: #fff;
+  width: 85vw;
+  height: 90vh;
+}
+
+.button {
+  background: #fff;
+  cursor: pointer;
+  width: 200px;
+  padding: 10px;
+}
+
+.sheetButtonContainer {
+  position: absolute;
+  bottom: 7%;
+}
+

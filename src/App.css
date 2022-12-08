@@ -48,3 +48,13 @@
   margin-left: auto;
 */
 }
+
+.fullscreen-enabled>div {
+  margin: auto;
+  width: max-content;
+  height: 100%;
+}
+
+.fullscreen-enabled #excel-sheet-buttons {
+  display: none;
+}

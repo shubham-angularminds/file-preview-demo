@@ -14,9 +14,9 @@ import {
 import classNames from "classnames";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack5";
-import SamplePdf from "../sample2.pdf";
 import { useEffect } from "react";
 import { read, utils, writeFileXLSX } from "xlsx";
+
 
 const Modal = ({
   setIsOpen,
@@ -31,13 +31,16 @@ const Modal = ({
   const [height, setHeight] = useState(640);
   const [width, setWidth] = useState(1375);
   const [pdfScale, setPdfScale] = useState(1);
-
-  const imageRef = useRef({ clientHeight: height, clientWidth: width });
-
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [fullScreenEnabled, setFullScreenEnabled] = useState(false);
+  const [excelData, setExcelData] = useState([]);
+  const [totalSheets, setTotalSheets] = useState(null);
+  const [allSheets, setAllSheets] = useState([]);
+  const [sheetIndex, setSheetIndex] = useState(0);
+
+  const imageRef = useRef({ clientHeight: height, clientWidth: width });
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -118,15 +121,47 @@ const Modal = ({
   //Excel
   useEffect(() => {
     if (file?.fileType === "excel") {
+      // const workbook = read(file?.file, { type: "binary" });
+      // const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      // const data = utils.sheet_to_json(sheet, { header: 1 });
+      // setExcelData(data);
       (async () => {
         const f = await (await fetch(file.file)).arrayBuffer();
         const wb = read(f); // parse the array buffer
-        const ws = wb.Sheets[wb.SheetNames[0]]; // get the first worksheet
-        const data = utils.sheet_to_json(ws); // generate objects
+        const numSheets = wb.SheetNames.length;
+        setAllSheets(wb.SheetNames);
+        setTotalSheets(numSheets);
+        const ws = wb.Sheets[wb.SheetNames[sheetIndex]]; // get the first worksheet
+        const data = utils.sheet_to_json(ws, { header: 1 }); // generate objects
+
         console.log("excel data: ", data);
+        if (data[0][0] === undefined) {
+          data[0].fill("index", 0, 1);
+        }
+        setExcelData(data);
       })();
     }
-  }, [currentFileIndex]);
+  }, [file, sheetIndex]);
+
+  const { fileType } = file;
+
+  const grid = [
+    [{ value: 1 }, { value: 3 }, { id: 1 }],
+    [{ value: 2 }, { value: 4 }],
+  ];
+
+  const handleNext = () => {
+    setSheetIndex((value) => Number(value + 1));
+  };
+
+  const selectSheet = (sheet) => {
+    setSheetIndex(sheet);
+  };
+
+  console.log("total sheets ", totalSheets);
+
+  console.log("sheet index ", sheetIndex);
+  console.log("all sheets ", allSheets);
 
   return (
     <>
@@ -168,19 +203,18 @@ const Modal = ({
       }
       <div className={styles.centered}>
         <div
-          className={
-            file.fileType === "image" ? styles.imageModal : styles.pdfModal
-          }
+          className={fileType === "image" ? styles.imageModal : styles.pdfModal}
         >
           <div className={styles.modalContent}>
             <FullScreen handle={handle}>
-              {file?.fileType === "image" ? (
+              {fileType === "image" ? (
                 <img
                   style={fullScreenEnabled ? {} : imageStyle}
+                  alt="file-content"
                   src="./sample.jpg"
                   ref={imageRef}
                 ></img>
-              ) : (
+              ) : fileType === "pdf" ? (
                 <div className={styles.pdfRender}>
                   <Document
                     file={file.file}
@@ -192,10 +226,46 @@ const Modal = ({
                     Page {pageNumber} of {numPages}
                   </p>
                 </div>
+              ) : (
+                // <Spreadsheet data={grid} readOnly={true} /
+                <div className={styles.tableContainer}>
+                  <table className={styles.excelTable}>
+                    <thead>
+                      <tr>
+                        {excelData[0] &&
+                          excelData[0].map((header, index) => (
+                            <>
+                              <th key={index}>{header}</th>
+                            </>
+                          ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {excelData?.slice(1).map((row, index) => (
+                        <tr key={index}>
+                          {row.map((cell, index) => (
+                            <td key={index}>{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <>
+                    <div className={styles.sheetButtonContainer} id="excel-sheet-buttons">
+                      {allSheets?.map((sheet, index) => (
+                        <button
+                          type="button"
+                          className={styles.button}
+                          onClick={() => selectSheet(index)}
+                        >
+                          {sheet}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                </div>
               )}
             </FullScreen>
-          </div>
-          <div className={styles.sliderButtons}>
             {currentFileIndex !== 0 && (
               <MdOutlineNavigateBefore
                 className={styles.navigatePrevious}
@@ -213,10 +283,10 @@ const Modal = ({
           </div>
         </div>
         {
-          //lower Buttons
+          // lower Buttons
         }
         <div className={lowerButtonClass}>
-          {file.fileType === "pdf" && (
+          {fileType === "pdf" && (
             <span style={{ marginRight: "10px" }}>
               <MdOutlineArrowUpward
                 style={{ color: "#fff", fontSize: "20px", cursor: "pointer" }}
@@ -228,7 +298,7 @@ const Modal = ({
               />
             </span>
           )}
-          {file.fileType === "pdf" && (
+          {fileType === "pdf" && (
             <span style={{ marginRight: "10px" }}>
               Page{" "}
               <span>
@@ -247,7 +317,7 @@ const Modal = ({
               of {numPages}
             </span>
           )}
-          {file.fileType === "image" && (
+          {fileType === "image" && (
             <span className={styles.lowerBtns} style={{ marginRight: "10px" }}>
               <MdCached
                 style={{ color: "#fff", fontSize: "20px", cursor: "pointer" }}
@@ -282,14 +352,3 @@ const Modal = ({
 };
 
 export default Modal;
-
-{
-  /* <button className={styles.closeBtn} onClick={() => setIsOpen(false)}>
-            <RiCloseLine style={{ marginBottom: "-3px" }} />
-          </button> */
-}
-{
-  /* <div className={styles.modalHeader}>
-            <h5 className={styles.heading}>Modal</h5>
-          </div> */
-}
