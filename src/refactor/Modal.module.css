@@ -176,33 +176,24 @@
   border: none;
 }
 
-.navigationButtons {
-  position: absolute;
-  color: #000;
-  border: 10px #ff3e4e;
-  z-index: 2000;
-}
-
 .navigatePrevious {
   position: fixed;
-  left: 2%;
   top: 50%;
+  left: -50px;
   background: rgb(77, 77, 77);
   color: #000;
   cursor: pointer;
   border-radius: 15px;
-  z-index: 2000;
 }
 
 .navigateNext {
   position: fixed;
-  right: 2%;
+  right: -50px;
   top: 50%;
   background: rgb(77, 77, 77);
   color: #000;
   cursor: pointer;
   border-radius: 15px;
-  z-index: 2000;
 }
 
 .pdfRender {}
@@ -293,26 +284,24 @@ td {
 }
 
 th {
-  background-color: #969696;
-  color: #fff;
+  background-color: #dddddd;
 }
 
 .excelTable {
   background: #fff;
   width: 85vw;
-  height: 95vh;
+  height: 90vh;
 }
 
 .button {
   background: #fff;
-  color: rgb(44, 0, 65);
-  font-weight: 700;
   cursor: pointer;
-  width: 100px;
+  width: 200px;
   padding: 10px;
 }
 
 .sheetButtonContainer {
   position: absolute;
-  bottom: 5%;
+  bottom: 7%;
 }
+

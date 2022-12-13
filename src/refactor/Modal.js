@@ -1,21 +1,9 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./Modal.module.css";
-import { RiCloseLine, RiFileChartLine } from "react-icons/ri";
-import { FiDownload, FiMaximize } from "react-icons/fi";
-import {
-  MdCached,
-  MdZoomIn,
-  MdZoomOut,
-  MdOutlineNavigateNext,
-  MdOutlineNavigateBefore,
-  MdOutlineArrowUpward,
-  MdOutlineArrowDownward,
-} from "react-icons/md";
-import classNames from "classnames";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { Document, Page } from "react-pdf/dist/esm/entry.webpack5";
-import { useEffect } from "react";
-import { read, utils, writeFileXLSX } from "xlsx";
+import UpperButtonSection from "./UpperButtonSection";
+import LowerButtonSection from "./LowerButtonSection";
+import FileView from "./fileView";
 
 const Modal = ({
   setIsOpen,
@@ -41,7 +29,6 @@ const Modal = ({
     setNumPages(numPages);
   }
 
- 
   const handleZoomIn = () => {
     if (file?.fileType === "image") {
       const height = imageRef?.current?.clientHeight;
@@ -53,7 +40,7 @@ const Modal = ({
       setPdfScale(pdfScale + 0.25);
     }
   };
-  
+
   const handleZoomOut = () => {
     if (file?.fileType === "image") {
       const height = imageRef?.current?.clientHeight;
@@ -65,7 +52,7 @@ const Modal = ({
       setPdfScale(pdfScale - 0.25);
     }
   };
-  
+
   const handleReset = () => {
     setHeight(640);
     setWidth(1375);
@@ -73,19 +60,19 @@ const Modal = ({
     setPageNumber(1);
     setPdfScale(1);
   };
-  
+
   useEffect(() => {
     handleReset();
   }, [currentFileIndex]);
-  
+
   const handleNextPage = () => {
     setPageNumber(pageNumber + 1);
   };
-  
+
   const handleBeforePage = () => {
     setPageNumber(pageNumber - 1);
   };
-  
+
   return (
     <FullScreen handle={handle}>
       <div className={styles.modal}>
@@ -97,6 +84,7 @@ const Modal = ({
           currentFileIndex={currentFileIndex}
           setCurrentFileIndex={setCurrentFileIndex}
           handle={handle}
+          fullScreenEnabled={fullScreenEnabled}
           setFullScreenEnabled={setFullScreenEnabled}
         />
         <FileView
@@ -112,7 +100,8 @@ const Modal = ({
           handleZoomIn={handleZoomIn}
           handleZoomOut={handleZoomOut}
           handleReset={handleReset}
-          rotate={rotate}
+          imageRef={imageRef}
+          onDocumentLoadSuccess={onDocumentLoadSuccess}
         />
         <LowerButtonSection
           file={file}
@@ -123,9 +112,10 @@ const Modal = ({
           handleZoomIn={handleZoomIn}
           handleZoomOut={handleZoomOut}
           handleReset={handleReset}
-          rotate={rotate}
         />
       </div>
     </FullScreen>
   );
-  
+};
+
+export default Modal;

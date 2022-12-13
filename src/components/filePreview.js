@@ -16,12 +16,11 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack5";
 import { useEffect } from "react";
 import { read, utils, writeFileXLSX } from "xlsx";
-//Todo seperate Excel view component
-import ExcelTable from "./ExcelTable";
+import SideNavigations from "./sideNavigations";
 
-const Modal = ({
-  setIsOpen,
-  file,
+const FilePreview = ({
+  handleClose,
+  files,
   handleNextFile,
   handleBeforeFile,
   fileLength,
@@ -43,30 +42,32 @@ const Modal = ({
 
   const imageRef = useRef({ clientHeight: height, clientWidth: width });
 
+  const { mimeType, location, name } = files;
+
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
 
   const handleZoomIn = () => {
-    if (file?.fileType === "image") {
+    if (mimeType === "image") {
       const height = imageRef?.current?.clientHeight;
       const width = imageRef?.current?.clientWidth;
       setHeight(height + 100);
       setWidth(width + 100);
     }
-    if (file?.fileType === "pdf") {
+    if (mimeType === "pdf") {
       setPdfScale(pdfScale + 0.25);
     }
   };
 
   const handleZoomOut = () => {
-    if (file?.fileType === "image") {
+    if (mimeType === "image") {
       const height = imageRef?.current?.clientHeight;
       const width = imageRef?.current?.clientWidth;
       setHeight(height - 100);
       setWidth(width - 100);
     }
-    if (file?.fileType === "pdf" && pdfScale !== 1) {
+    if (mimeType === "pdf" && pdfScale !== 1) {
       setPdfScale(pdfScale - 0.25);
     }
   };
@@ -100,8 +101,8 @@ const Modal = ({
   };
 
   const lowerButtonClass = classNames({
-    [styles.lowerButtonsSectionImage]: file.fileType === "image",
-    [styles.lowerButtonsSectionPdf]: file.fileType === "pdf",
+    [styles.lowerButtonsSectionImage]: mimeType === "image",
+    [styles.lowerButtonsSectionPdf]: mimeType === "pdf",
   });
 
   const handleNextPage = () => {
@@ -128,13 +129,13 @@ const Modal = ({
 
   //Excel
   useEffect(() => {
-    if (file?.fileType === "excel") {
+    if (mimeType === "excel") {
       // const workbook = read(file?.file, { type: "binary" });
       // const sheet = workbook.Sheets[workbook.SheetNames[0]];
       // const data = utils.sheet_to_json(sheet, { header: 1 });
       // setExcelData(data);
       (async () => {
-        const f = await (await fetch(file.file)).arrayBuffer();
+        const f = await (await fetch(location)).arrayBuffer();
         const wb = read(f); // parse the array buffer
         const numSheets = wb.SheetNames.length;
         setAllSheets(wb.SheetNames);
@@ -149,9 +150,7 @@ const Modal = ({
         setExcelData(data);
       })();
     }
-  }, [file, sheetIndex]);
-
-  const { fileType } = file;
+  }, [location, mimeType, sheetIndex]);
 
   const selectSheet = (sheet) => {
     setSheetIndex(sheet);
@@ -159,6 +158,9 @@ const Modal = ({
 
   return (
     <>
+      {
+        //todo seperate component
+      }
       <div className={styles.darkBG}>
         <div className={styles.toolbarContainer}>
           <div className={styles.toolbar}>
@@ -166,7 +168,7 @@ const Modal = ({
               <span className={styles.FileIcon}>
                 <RiFileChartLine style={{ color: "#fff", fontSize: "20px" }} />
               </span>
-              <span className={styles.topFileName}>{file.fileName}</span>
+              <span className={styles.topFileName}>{name}</span>
             </div>
             <div className={styles.toolbarRight}>
               <span className={styles.rightBtns} onClick={enableFullScreen}>
@@ -180,7 +182,7 @@ const Modal = ({
               <span
                 className={styles.rightBtns}
                 onClick={() => {
-                  setIsOpen(false);
+                  handleClose(false);
                   setCurrentFileIndex(0);
                 }}
               >
@@ -194,14 +196,15 @@ const Modal = ({
 
       {
         //Modal start
+        //todo seperate component
       }
       <div className={styles.centered}>
         <div
-          className={fileType === "image" ? styles.imageModal : styles.pdfModal}
+          className={mimeType === "image" ? styles.imageModal : styles.pdfModal}
         >
           <div className={styles.modalContent}>
             <FullScreen handle={handle} onChange={handleFullScrenChange}>
-              {fileType === "image" ? (
+              {mimeType === "image" ? (
                 <div className="image-container">
                   <img
                     style={fullScreenEnabled ? {} : imageStyle}
@@ -210,12 +213,12 @@ const Modal = ({
                     ref={imageRef}
                   ></img>
                 </div>
-              ) : fileType === "pdf" ? (
+              ) : mimeType === "pdf" ? (
                 // <ExcelTable  file={file.file}/>
 
                 <div className={styles.pdfRender}>
                   <Document
-                    file={file.file}
+                    file={location}
                     onLoadSuccess={onDocumentLoadSuccess}
                   >
                     <Page pageNumber={pageNumber} scale={pdfScale} />
@@ -267,39 +270,27 @@ const Modal = ({
                 </div>
               )}
             </FullScreen>
-            {currentFileIndex !== 0 && (
-              <MdOutlineNavigateBefore
-                className={styles.navigatePrevious}
-                style={{ color: "#fff", fontSize: "30px" }}
-                onClick={handleBeforeFile}
-              />
-            )}
-            {currentFileIndex !== fileLength - 1 && (
-              <MdOutlineNavigateNext
-                className={styles.navigateNext}
-                style={{ color: "#fff", fontSize: "30px" }}
-                onClick={handleNextFile}
-              />
-            )}
           </div>
         </div>
+
         {
           // lower Buttons
+          //todo seperate component
         }
         <div className={lowerButtonClass}>
-          {fileType === "pdf" && (
+          {mimeType === "pdf" && (
             <span style={{ marginRight: "10px" }}>
               <MdOutlineArrowUpward
                 style={{ color: "#fff", fontSize: "20px", cursor: "pointer" }}
-                onClick={handleNextPage}
+                onClick={handlePrevPage}
               />
               <MdOutlineArrowDownward
                 style={{ color: "#fff", fontSize: "20px", cursor: "pointer" }}
-                onClick={handlePrevPage}
+                onClick={handleNextPage}
               />
             </span>
           )}
-          {fileType === "pdf" && (
+          {mimeType === "pdf" && (
             <span style={{ marginRight: "10px" }}>
               Page{" "}
               <span>
@@ -318,7 +309,7 @@ const Modal = ({
               of {numPages}
             </span>
           )}
-          {fileType === "image" && (
+          {mimeType === "image" && (
             <span className={styles.lowerBtns} style={{ marginRight: "10px" }}>
               <MdCached
                 style={{ color: "#fff", fontSize: "20px", cursor: "pointer" }}
@@ -348,8 +339,14 @@ const Modal = ({
           </span>
         </div>
       </div>
+      <SideNavigations
+        handleBeforeFile={handleBeforeFile}
+        handleNextFile={handleNextFile}
+        currentFileIndex={currentFileIndex}
+        fileLength={fileLength}
+      />
     </>
   );
 };
 
-export default Modal;
+export default FilePreview;

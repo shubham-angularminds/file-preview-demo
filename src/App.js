@@ -1,28 +1,32 @@
 import React, { useState } from "react";
 import "./App.css";
 import styles from "./App.module.css";
-import Modal from "./components/modal";
+import FilePreview from "./components/filePreview";
+//todo refactor
+// import Modal from "./refactor/Modal";
 import SampleImage from "./sample.jpg";
 import SamplePdf from "./sample2.pdf";
-import SampleExcel from  './sample.xlsx';
+import SampleExcel from "./sample.xlsx";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const files = [
     {
-      file: SampleImage,
-      fileType: "image",
-      fileName: "sample-image1.jpg",
+      location: SampleImage,
+      mimeType: "image",
+      name: "sample-image1.jpg",
     },
     {
-      file: SamplePdf,
-      fileType: "pdf",
-      fileName: "sample-pdf.pdf",
-    },{
-      file: SampleExcel,
-      fileType: 'excel',
-      fileName: 'sample-excel.xlsx'
-    }
+      // location: SamplePdf,
+      location: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
+      mimeType: "pdf",
+      name: "sample-pdf.pdf",
+    },
+    {
+      location: SampleExcel,
+      mimeType: "excel",
+      name: "sample-excel.xlsx",
+    },
   ];
 
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
@@ -36,7 +40,7 @@ function App() {
   };
 
   const fileLength = files.length;
-  
+
   return (
     <>
       <div>
@@ -44,14 +48,15 @@ function App() {
           Show File
         </button>
         {isOpen && (
-          <Modal
-            setIsOpen={setIsOpen}
-            file={files[currentFileIndex]}
+          <FilePreview
+            files={files[currentFileIndex]}
             fileLength={fileLength}
             currentFileIndex={currentFileIndex}
             handleNextFile={handleNextFile}
             handleBeforeFile={handleBeforeFile}
             setCurrentFileIndex={setCurrentFileIndex}
+            // show={}
+            handleClose={setIsOpen}
           />
         )}
       </div>
