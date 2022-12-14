@@ -31,7 +31,7 @@ const modalContent = ({
                 <img
                   style={fullScreenEnabled ? {} : imageStyle}
                   alt="file-content"
-                  src="./sample.jpg"
+                  src={location}
                   ref={imageRef}
                 ></img>
               </div>

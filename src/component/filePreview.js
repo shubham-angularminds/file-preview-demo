@@ -26,7 +26,6 @@ const FilePreview = ({
   const [rotation, setRotation] = useState(0);
   const [fullScreenEnabled, setFullScreenEnabled] = useState(false);
   const [excelData, setExcelData] = useState([]);
-  const [totalSheets, setTotalSheets] = useState(null);
   const [allSheets, setAllSheets] = useState([]);
   const [sheetIndex, setSheetIndex] = useState(0);
 
@@ -80,8 +79,6 @@ const FilePreview = ({
     transform: `rotate(${rotation}deg)`,
   };
 
-  console.log("image styles : ", imageStyle);
-
   const rotate = () => {
     let newRotation = rotation + 90;
     if (newRotation >= 360) {
@@ -108,7 +105,6 @@ const FilePreview = ({
   };
 
   const handleFullScrenChange = useCallback((state) => {
-    console.log("Screen 1 went to", state);
     state ? setFullScreenEnabled(true) : setFullScreenEnabled(false);
   }, []);
 
@@ -116,11 +112,13 @@ const FilePreview = ({
   useEffect(() => {
     if (mimeType === "excel") {
       (async () => {
-        const f = await (await fetch(location)).arrayBuffer();
+        const f = await (
+          await fetch(location, {
+            "Access-Control-Allow-Origin": "*",
+          })
+        ).arrayBuffer();
         const wb = read(f); // parse the array buffer
-        const numSheets = wb.SheetNames.length;
         setAllSheets(wb.SheetNames);
-        setTotalSheets(numSheets);
         const ws = wb.Sheets[wb.SheetNames[sheetIndex]]; // get the first worksheet
         const data = utils.sheet_to_json(ws, { header: 1 }); // generate objects
 
@@ -141,6 +139,7 @@ const FilePreview = ({
     <>
       <UpperToolbar
         name={name}
+        location={location}
         enableFullScreen={enableFullScreen}
         handleClose={handleClose}
         setCurrentFileIndex={setCurrentFileIndex}

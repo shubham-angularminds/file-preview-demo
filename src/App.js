@@ -10,13 +10,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const files = [
     {
-      location: SampleImage,
+      // location: SampleImage,
+      location: "https://picsum.photos/seed/picsum/1200/900",
       mimeType: "image",
       name: "sample-image1.jpg",
     },
     {
       // location: SamplePdf,
-      location: 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf',
+      location:
+        "https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf",
       mimeType: "pdf",
       name: "sample-pdf.pdf",
     },
@@ -41,9 +43,9 @@ function App() {
 
   return (
     <>
-      <div>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: 'center'}}>
         <button className={styles.primaryBtn} onClick={() => setIsOpen(true)}>
-          Show File
+          File Preview
         </button>
         {isOpen && (
           <FilePreview

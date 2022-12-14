@@ -5,6 +5,7 @@ import { FiDownload, FiMaximize } from "react-icons/fi";
 
 const upperToolbar = ({
   name,
+  location,
   enableFullScreen,
   handleClose,
   setCurrentFileIndex,
@@ -25,7 +26,7 @@ const upperToolbar = ({
                 <FiMaximize style={{ color: "#fff", fontSize: "20px" }} />
               </span>
               <span className={styles.rightBtns}>
-                <a href="./sample.jpg" download="my_file.jpg">
+                <a href={location} download={name}>
                   <FiDownload style={{ color: "#fff", fontSize: "20px" }} />
                 </a>
               </span>
