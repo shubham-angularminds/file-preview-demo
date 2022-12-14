@@ -1,0 +1,33 @@
+/* @src/components/Modal.module.css */
+
+
+
+
+.centered {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.react-pdf__Page {
+  left: 50%;
+  right: 50%;
+  transform: translate(-260px, 35px);
+}
+
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+th {
+  background-color: #969696;
+  color: #fff;
+}

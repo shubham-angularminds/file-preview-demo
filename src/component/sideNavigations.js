@@ -1,6 +1,6 @@
 import React from "react";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
-import styles from "./Modal.module.css";
+import styles from "./sideNavigations.module.css";
 
 const sideNavigations = ({
   handleBeforeFile,

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import styles from "./App.module.css";
-import FilePreview from "./components/filePreview";
-//todo refactor
-// import Modal from "./refactor/Modal";
+import FilePreview from "./component/filePreview";
 import SampleImage from "./sample.jpg";
 import SamplePdf from "./sample2.pdf";
 import SampleExcel from "./sample.xlsx";

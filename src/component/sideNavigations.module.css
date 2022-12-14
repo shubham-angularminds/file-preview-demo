@@ -1,0 +1,21 @@
+.navigatePrevious {
+  position: fixed;
+  left: 2%;
+  top: 50%;
+  background: rgb(77, 77, 77);
+  color: #000;
+  cursor: pointer;
+  border-radius: 15px;
+  z-index: 2000;
+}
+
+.navigateNext {
+  position: fixed;
+  right: 2%;
+  top: 50%;
+  background: rgb(77, 77, 77);
+  color: #000;
+  cursor: pointer;
+  border-radius: 15px;
+  z-index: 2000;
+}

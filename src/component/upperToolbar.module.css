@@ -1,0 +1,90 @@
+.darkBG {
+  background-color: rgb(0, 0, 0);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+
+.darkBG {
+  background-color: rgb(0, 0, 0);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.toolbarContainer {
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .65) 0%, transparent 100%);
+  height: 56px;
+  padding: 0 0 16px 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  position: relative;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  pointer-events: auto;
+  height: 48px;
+  left: 0;
+  right: 0;
+  padding-top: 8px;
+  width: auto;
+  margin-right: 12px;
+  padding-left: 12px;
+}
+
+.toolbarLeft {
+  display: flex;
+  align-items: center;
+  float: left;
+  position: relative;
+  left: 5px;
+}
+
+.topFileName {
+  color: #fff;
+  margin-left: 2px;
+}
+
+.topFileName {
+  left: 50px
+}
+
+.toolbarRight {
+  float: right;
+  position: relative;
+  right: 5px;
+}
+
+.rightBtns {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+  color: #2c3e50;
+  transition: all 0.25s ease;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
+  margin-top: -7px;
+  margin-right: -7px;
+}
+
+.rightBtns:hover {
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+  transform: translate(-4px, 4px);
+}
