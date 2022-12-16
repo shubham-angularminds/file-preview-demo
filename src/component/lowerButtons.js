@@ -27,7 +27,6 @@ const lowerButtons = ({
   });
 
   return (
-    <>
       <div className={lowerButtonClass}>
         {mimeType === "pdf" && (
           <span style={{ marginRight: "10px" }}>
@@ -89,7 +88,6 @@ const lowerButtons = ({
           Reset
         </span>
       </div>
-    </>
   );
 };
 

@@ -20,7 +20,6 @@ const modalContent = ({
   selectSheet
 }) => {
   return (
-    <div>
       <div
         className={mimeType === "image" ? styles.imageModal : styles.pdfModal}
       >
@@ -89,7 +88,6 @@ const modalContent = ({
           </FullScreen>
         </div>
       </div>
-    </div>
   );
 };
 

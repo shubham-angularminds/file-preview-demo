@@ -11,7 +11,6 @@ const upperToolbar = ({
   setCurrentFileIndex,
 }) => {
   return (
-    <>
       <div className={styles.toolbarContainer}>
         <div className={styles.toolbar}>
           <div className={styles.toolbarLeft}>
@@ -42,7 +41,6 @@ const upperToolbar = ({
           </div>
         </div>
       </div>
-    </>
   );
 };
 
