@@ -8,15 +8,7 @@ import ModalContent from "./modalContent";
 import UpperToolbar from "./upperToolbar";
 import LowerButtons from "./lowerButtons";
 
-const FilePreview = ({
-  handleClose,
-  files,
-  handleNextFile,
-  handleBeforeFile,
-  fileLength,
-  currentFileIndex,
-  setCurrentFileIndex,
-}) => {
+const FilePreview = ({ handleClose, files, size }) => {
   const handle = useFullScreenHandle();
   const [height, setHeight] = useState(640);
   const [width, setWidth] = useState(1375);
@@ -29,9 +21,20 @@ const FilePreview = ({
   const [allSheets, setAllSheets] = useState([]);
   const [sheetIndex, setSheetIndex] = useState(0);
 
-  const imageRef = useRef({ clientHeight: height, clientWidth: width });
+  const [currentFileIndex, setCurrentFileIndex] = useState(0);
+  const handleNextFile = () => {
+    setCurrentFileIndex(currentFileIndex + 1);
+  };
 
-  const { mimeType, location, name } = files;
+  const handlePreviousFile = () => {
+    setCurrentFileIndex(currentFileIndex - 1);
+  };
+
+  const fileLength = files.length;
+
+  const { mimeType, location, name } = files[currentFileIndex];
+
+  const imageRef = useRef({ clientHeight: height, clientWidth: width });
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -136,7 +139,11 @@ const FilePreview = ({
   };
 
   return (
-    <>
+    <div
+      className={
+        size === "md" ? styles.mdbg : size === "sm" ? styles.smbg : styles.lgbg
+      }
+    >
       <UpperToolbar
         name={name}
         location={location}
@@ -177,12 +184,12 @@ const FilePreview = ({
         />
       </div>
       <SideNavigations
-        handleBeforeFile={handleBeforeFile}
+        handlePreviousFile={handlePreviousFile}
         handleNextFile={handleNextFile}
         currentFileIndex={currentFileIndex}
         fileLength={fileLength}
       />
-    </>
+    </div>
   );
 };
 

@@ -29,33 +29,23 @@ function App() {
     },
   ];
 
-  const [currentFileIndex, setCurrentFileIndex] = useState(0);
-
-  const handleNextFile = () => {
-    setCurrentFileIndex(currentFileIndex + 1);
-  };
-
-  const handleBeforeFile = () => {
-    setCurrentFileIndex(currentFileIndex - 1);
-  };
-
-  const fileLength = files.length;
-
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: 'center'}}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <button className={styles.primaryBtn} onClick={() => setIsOpen(true)}>
           File Preview
         </button>
         {isOpen && (
           <FilePreview
-            files={files[currentFileIndex]}
-            fileLength={fileLength}
-            currentFileIndex={currentFileIndex}
-            handleNextFile={handleNextFile}
-            handleBeforeFile={handleBeforeFile}
-            setCurrentFileIndex={setCurrentFileIndex}
+            files={files}
             // show={}
+            size='lg' //todo: show different size
             handleClose={setIsOpen}
           />
         )}

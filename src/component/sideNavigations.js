@@ -3,7 +3,7 @@ import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import styles from "./sideNavigations.module.css";
 
 const sideNavigations = ({
-  handleBeforeFile,
+  handlePreviousFile,
   handleNextFile,
   currentFileIndex,
   fileLength,
@@ -14,7 +14,7 @@ const sideNavigations = ({
         <MdOutlineNavigateBefore
           className={styles.navigatePrevious}
           style={{ color: "#fff", fontSize: "30px" }}
-          onClick={handleBeforeFile}
+          onClick={handlePreviousFile}
         />
       )}
       {currentFileIndex !== fileLength - 1 && (

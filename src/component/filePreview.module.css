@@ -1,6 +1,40 @@
 /* @src/components/Modal.module.css */
 
+.smbg {
+  background-color: rgb(0, 0, 0);
+  width: 50vw;
+  height: 50vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  overflow: auto;
+}
 
+.mdbg {
+  background-color: rgb(0, 0, 0);
+  width: 70vw;
+  height: 60vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  overflow: auto;
+}
+
+.lgbg {
+  background-color: rgb(0, 0, 0);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  overflow: auto;
+}
 
 
 .centered {
